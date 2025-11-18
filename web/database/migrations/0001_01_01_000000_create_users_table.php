@@ -16,8 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('is_active');
+            $table->boolean('is_forbidden')->default(false);
+            $table->text('forbidden_reason')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
 

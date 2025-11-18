@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('reminder_statuses', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['pending', 'sent', 'acknowledged', 'dismissed']);
+            $table->foreignId('reminder_id')->constrained('reminders')->onDelete('cascade');
+            $table->date('acknowledged_at')->nullable();
+            $table->date('dismissed_at')->nullable();
+            $table->date('sent_at')->nullable();
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 

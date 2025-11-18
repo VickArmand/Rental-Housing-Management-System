@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('number_of_rooms')->nullable();
+            $table->boolean('is_fully_rented')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->string('property_address')->nullable();
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 
