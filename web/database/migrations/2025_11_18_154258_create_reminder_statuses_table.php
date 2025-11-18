@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('reminder_statuses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 

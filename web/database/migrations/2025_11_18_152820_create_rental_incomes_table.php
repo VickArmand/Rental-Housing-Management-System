@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('rental_incomes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 

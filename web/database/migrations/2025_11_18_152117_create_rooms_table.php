@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('room_name');
+            $table->text('description')->nullable();
+            $table->decimal('monthly_rent', 10, 2);
+            $table->decimal('security_deposit', 10, 2)->default(0);
+            $table->decimal('other_charges', 10, 2)->default(0);
+            $table->integer('maximum_capacity')->default(1);
+            $table->boolean('is_vacant')->default(true);
+            $table->boolean('is_active')->default(true);
+            $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade');
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 
