@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('forbidden_reason')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreign('room_id')->constrained('rooms')->onDelete('set null')->nullable();
+            $table->foreignId('room_id')->nullable()->constrained('rooms')->onDelete('set null');
             $table->timestamps();
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
