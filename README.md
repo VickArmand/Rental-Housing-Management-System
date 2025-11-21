@@ -6,8 +6,8 @@
     <li>Authentication</li>
     <li>Create/register, edit, fetch, delete a rental, room, an expense, tenant, caretaker, admin</li>
     <li>Monitor tenant accounting information</li>
-    <li>Export tenant accounting information in pdf format</li>
-    <li></li>
+    <li>Report Generation of tenant accounting information in pdf format</li>
+    <li>Ability to operate without internet + frequent backup from local database to online database</li>
 </ul>
 
 ### Authors
@@ -16,7 +16,7 @@
 </ul>
 
 ## Installation
-<p>It is an Android application, though it hasnt being uploaded to Play Store</p>
+<p>It is a multiplatform mobile application, though it hasnt being uploaded to Play Store</p>
 
 ## Usage
 For a new owner you need to:
