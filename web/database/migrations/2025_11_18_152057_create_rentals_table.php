@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->integer('number_of_rooms')->nullable();
             $table->boolean('is_fully_rented')->default(false);
             $table->boolean('is_active')->default(true);
