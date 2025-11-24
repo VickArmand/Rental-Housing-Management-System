@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tenant_reminder_statuses', function (Blueprint $table) {
             $table->id();
             $table->enum('status', ['pending', 'sent', 'acknowledged', 'dismissed']);
-            $table->foreignId('reminder_id')->constrained('reminders')->onDelete('cascade');
+            $table->foreignId('tenant_reminder_id')->constrained('tenant_reminders')->onDelete('cascade');
             $table->date('acknowledged_at')->nullable();
             $table->date('dismissed_at')->nullable();
             $table->date('sent_at')->nullable();

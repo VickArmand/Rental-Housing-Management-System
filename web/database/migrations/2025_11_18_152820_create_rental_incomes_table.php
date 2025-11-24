@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('rental_incomes', function (Blueprint $table) {
             $table->id();
             $table->enum('income_type', ['rent', 'deposit', 'utility', 'other']);
-            $table->decimal('amount', 10, 2);
             $table->date('income_date');
             $table->text('description')->nullable();
             $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade');
             $table->foreignId('tenant_id')->constrained('tenants')->onDelete('cascade');
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
             $table->decimal('original_amount', 10, 2);
-            $table->decimal('amount_paid', 10, 2);
+            $table->decimal('amount_received', 10, 2);
             $table->decimal('balance_due', 10, 2);
             $table->string('income_reference')->unique();
             $table->enum('payment_method', ['credit_card', 'bank_transfer', 'cash', 'mobile_money']);
+            $table->date('payment_date');
             $table->enum('status', ['complete', 'partial', 'unpaid', 'waived']);
             $table->timestamps();
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');

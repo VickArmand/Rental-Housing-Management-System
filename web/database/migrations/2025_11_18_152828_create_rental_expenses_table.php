@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('rental_expenses', function (Blueprint $table) {
             $table->id();
             $table->enum('expense_type', ['maintenance', 'utilities', 'deposit_refund', 'property_tax', 'insurance', 'other']);
-            $table->decimal('amount', 10, 2);
             $table->text('description')->nullable();
             $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade');
             $table->foreignId('tenant_id')->constrained('tenants')->onDelete('cascade')->nullable();
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->string('expense_reference')->unique();
             $table->enum('payment_method', ['credit_card', 'bank_transfer', 'cash', 'mobile_money']);
             $table->enum('status', ['paid', 'unpaid', 'partial']);
+            $table->date('incurred_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->decimal('original_amount', 10, 2);
             $table->decimal('amount_paid', 10, 2);
