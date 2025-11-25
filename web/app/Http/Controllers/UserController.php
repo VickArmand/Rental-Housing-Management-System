@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     /**
@@ -13,26 +14,32 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        return response()->json($users);
     }
-    public function loginAsUser(Request $request, $userId)
+    public function login(Request $request)
     {
-        // Find the user by ID
-        $user = User::findOrFail($userId);
+        $request->validate(
+            [
+                'email' => 'required',
+                'password' => 'required',
+            ]
+        );
 
-        // Log in as the specified user
-        auth()->login($user);
+        $user = User::where('email', $request->email)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            return $user->createToken('auth_token')->plainTextToken;
+        } else {
+            // Handle the case where the user is not found or credentials are invalid
+            return redirect()->back()->withErrors(['message' => 'Invalid credentials or user not found.']);
+        }
 
-        // Redirect to the intended page or home
-        return redirect()->intended('/');
     }
 
-    public function logoutAsUser(Request $request)
+    public function logout(Request $request)
     {
-        // Log out the current user
-        auth()->logout();
-
-        // Redirect to the admin login page or home
-        return redirect('/admin/login');
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
     }
     /**
      * Show the form for creating a new resource.
@@ -48,6 +55,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $user = User::create($request->all());
+        return response()->json($user, 201);
     }
 
     /**
@@ -56,6 +65,10 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        $user = User::find($id);
+        if (!$user) 
+            return response()->json(['message' => 'User not found'], 404);
+        return response()->json($user);
     }
 
     /**
@@ -72,6 +85,11 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $user = User::find($id);
+        if (!$user) 
+            return response()->json(['message' => 'User not found'], 404);
+        $user->update($request->all());
+        return response()->json($user);
     }
 
     /**
@@ -80,5 +98,10 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = User::find($id);
+        if (!$user) 
+            return response()->json(['message' => 'User not found'], 404);
+        $user->delete();
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

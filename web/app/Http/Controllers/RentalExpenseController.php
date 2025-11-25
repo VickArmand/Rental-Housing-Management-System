@@ -38,6 +38,6 @@ class RentalExpenseController extends Controller
         if (!$rentalexpense) 
             return response()->json(['message' => 'Rental Expense not found'], 404);
         $rentalexpense->delete();
-        return response()->json(['message' => 'RentalExpense deleted successfully']);
+        return response()->json(['message' => 'Rental Expense deleted successfully']);
     }
 }
