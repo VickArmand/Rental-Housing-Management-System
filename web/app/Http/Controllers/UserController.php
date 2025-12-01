@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-use Illuminate\Support\Facades\Hash;
-
 class UserController extends Controller
 {
     /**
@@ -18,26 +16,7 @@ class UserController extends Controller
         //
         $users = User::all();
         return response()->json($users);
-        $users = User::all();
-        return response()->json($users);
     }
-    public function login(Request $request)
-    {
-        $request->validate(
-            [
-                'email' => 'required',
-                'password' => 'required',
-            ]
-        );
-
-        $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            return $user->createToken('auth_token')->plainTextToken;
-        } else {
-            // Handle the case where the user is not found or credentials are invalid
-            return redirect()->back()->withErrors(['message' => 'Invalid credentials or user not found.']);
-        }
-
     public function login(Request $request)
     {
         $request->validate(
@@ -58,10 +37,7 @@ class UserController extends Controller
     }
 
     public function logout(Request $request)
-    public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully']);
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }
@@ -79,8 +55,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-        $user = User::create($request->all());
-        return response()->json($user, 201);
         $user = User::create($request->all());
         return response()->json($user, 201);
     }
