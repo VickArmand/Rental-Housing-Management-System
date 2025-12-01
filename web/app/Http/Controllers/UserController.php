@@ -40,6 +40,8 @@ class UserController extends Controller
     {
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully']);
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
     }
     /**
      * Show the form for creating a new resource.
@@ -55,6 +57,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $user = User::create($request->all());
+        return response()->json($user, 201);
         $user = User::create($request->all());
         return response()->json($user, 201);
     }
