@@ -41,6 +41,26 @@ class UserController extends Controller
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }
+
+    public function forgotPassword(Request $request)
+    {
+        // Implement forgot password logic here
+        $request->validate(['email' => 'required|email']);
+        // Send password reset link or code to the user's email
+        return response()->json(['message' => 'Password reset link sent']);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        // Implement reset password logic here
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+        // Reset the user's password
+        return response()->json(['message' => 'Password has been reset']);
+    }
     /**
      * Show the form for creating a new resource.
      */
