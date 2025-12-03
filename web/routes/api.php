@@ -23,9 +23,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
 Route::post('/reset-password', [UserController::class, 'resetPassword']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::get('/user', [UserController::class, 'userDetails'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/caretakers'], function() {

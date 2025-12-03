@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,6 +17,13 @@ class UserController extends Controller
         //
         $users = User::all();
         return response()->json($users);
+    }
+    public function userDetails(Request $request)
+    {
+        $roleNames = Auth::user()->getRoleNames();
+        $permissions = Auth::user()->getAllPermissions();
+        $roles = Auth::user()->roles;
+        return response()->json(['user' => $request->user(), 'roles' => $roles, 'roleNames' => $roleNames, 'permissions' => $permissions]);
     }
     public function login(Request $request)
     {
