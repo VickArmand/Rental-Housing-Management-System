@@ -40,6 +40,12 @@ class Rental extends Model
     // }
     public function caretakers()
     {
-        return $this->hasMany(Caretaker::class);
+        return $this->belongsToMany(Caretaker::class);
     }
+
+    public function owners()
+    {
+        return $this->belongsToMany(Owner::class);
+    }
+    
 }
