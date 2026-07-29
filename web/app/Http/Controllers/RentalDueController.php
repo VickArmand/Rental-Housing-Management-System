@@ -12,7 +12,7 @@ class RentalDueController extends Controller
         $rentaldues = RentalDue::all();
         return response()->json($rentaldues);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $rentaldue = RentalDue::find($id);
         if (!$rentaldue) 
@@ -24,7 +24,7 @@ class RentalDueController extends Controller
         $rentaldue = RentalDue::create($request->all());
         return response()->json($rentaldue, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $rentaldue = RentalDue::find($id);
         if (!$rentaldue) 
@@ -32,7 +32,7 @@ class RentalDueController extends Controller
         $rentaldue->update($request->all());
         return response()->json($rentaldue);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $rentaldue = RentalDue::find($id);
         if (!$rentaldue) 

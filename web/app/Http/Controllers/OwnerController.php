@@ -12,7 +12,7 @@ class OwnerController extends Controller
         $owners = Owner::all();
         return response()->json($owners);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $owner = Owner::find($id);
         if (!$owner) 
@@ -24,7 +24,7 @@ class OwnerController extends Controller
         $owner = Owner::create($request->all());
         return response()->json($owner, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $owner = Owner::find($id);
         if (!$owner) 
@@ -32,7 +32,7 @@ class OwnerController extends Controller
         $owner->update($request->all());
         return response()->json($owner);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $owner = Owner::find($id);
         if (!$owner) 

@@ -13,7 +13,7 @@ class RentalIncomeController extends Controller
         $rentalincomes = RentalIncome::all();
         return response()->json($rentalincomes);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $rentalincome = RentalIncome::find($id);
         if (!$rentalincome) 
@@ -25,7 +25,7 @@ class RentalIncomeController extends Controller
         $rentalincome = RentalIncome::create($request->all());
         return response()->json($rentalincome, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $rentalincome = RentalIncome::find($id);
         if (!$rentalincome) 
@@ -33,7 +33,7 @@ class RentalIncomeController extends Controller
         $rentalincome->update($request->all());
         return response()->json($rentalincome);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $rentalincome = RentalIncome::find($id);
         if (!$rentalincome) 

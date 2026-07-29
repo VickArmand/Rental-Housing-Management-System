@@ -13,7 +13,7 @@ class SubscriptionController extends Controller
         $subscriptions = Subscription::all();
         return response()->json($subscriptions);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $subscription = Subscription::find($id);
         if (!$subscription) 
@@ -25,7 +25,7 @@ class SubscriptionController extends Controller
         $subscription = Subscription::create($request->all());
         return response()->json($subscription, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $subscription = Subscription::find($id);
         if (!$subscription) 
@@ -33,7 +33,7 @@ class SubscriptionController extends Controller
         $subscription->update($request->all());
         return response()->json($subscription);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $subscription = Subscription::find($id);
         if (!$subscription) 

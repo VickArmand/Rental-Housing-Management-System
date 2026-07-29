@@ -12,7 +12,7 @@ class RentalExpenseController extends Controller
         $rentalexpenses = RentalExpense::all();
         return response()->json($rentalexpenses);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $rentalexpense = RentalExpense::find($id);
         if (!$rentalexpense) 
@@ -24,7 +24,7 @@ class RentalExpenseController extends Controller
         $rentalexpense = RentalExpense::create($request->all());
         return response()->json($rentalexpense, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $rentalexpense = RentalExpense::find($id);
         if (!$rentalexpense) 
@@ -32,7 +32,7 @@ class RentalExpenseController extends Controller
         $rentalexpense->update($request->all());
         return response()->json($rentalexpense);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $rentalexpense = RentalExpense::find($id);
         if (!$rentalexpense) 

@@ -12,7 +12,7 @@ class ReminderController extends Controller
         $reminders = Reminder::all();
         return response()->json($reminders);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $reminder = Reminder::find($id);
         if (!$reminder) 
@@ -24,7 +24,7 @@ class ReminderController extends Controller
         $reminder = Reminder::create($request->all());
         return response()->json($reminder, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $reminder = Reminder::find($id);
         if (!$reminder) 
@@ -32,7 +32,7 @@ class ReminderController extends Controller
         $reminder->update($request->all());
         return response()->json($reminder);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $reminder = Reminder::find($id);
         if (!$reminder) 

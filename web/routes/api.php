@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/find', [CaretakerController::class, 'show']);
         Route::post('/create', [CaretakerController::class, 'store']);
         Route::put('/edit', [CaretakerController::class, 'update']);
-        Route::delete('/delete', [CaretakerController::class, 'dele']);
+        Route::delete('/delete', [CaretakerController::class, 'delete']);
     });
     Route::resource('owners', OwnerController::class);
     Route::resource('rentals', RentalController::class);

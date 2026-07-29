@@ -12,7 +12,7 @@ class RentalController extends Controller
         $rentals = Rental::all();
         return response()->json($rentals);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $rental = Rental::find($id);
         if (!$rental) 
@@ -24,7 +24,7 @@ class RentalController extends Controller
         $rental = Rental::create($request->all());
         return response()->json($rental, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $rental = Rental::find($id);
         if (!$rental) 
@@ -32,7 +32,7 @@ class RentalController extends Controller
         $rental->update($request->all());
         return response()->json($rental);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $rental = Rental::find($id);
         if (!$rental) 

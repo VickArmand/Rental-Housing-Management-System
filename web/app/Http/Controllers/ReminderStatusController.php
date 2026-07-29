@@ -12,7 +12,7 @@ class ReminderStatusController extends Controller
         $reminderstatuses = ReminderStatus::all();
         return response()->json($reminderstatuses);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $reminderstatus = ReminderStatus::find($id);
         if (!$reminderstatus) 
@@ -24,7 +24,7 @@ class ReminderStatusController extends Controller
         $reminderstatus = ReminderStatus::create($request->all());
         return response()->json($reminderstatus, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $reminderstatus = ReminderStatus::find($id);
         if (!$reminderstatus) 
@@ -32,7 +32,7 @@ class ReminderStatusController extends Controller
         $reminderstatus->update($request->all());
         return response()->json($reminderstatus);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $reminderstatus = ReminderStatus::find($id);
         if (!$reminderstatus) 

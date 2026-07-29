@@ -13,7 +13,7 @@ class TenantReminderStatusController extends Controller
         $tenantReminderStatuses = TenantReminderStatus::all();
         return response()->json($tenantReminderStatuses);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $tenantReminderStatus = TenantReminderStatus::find($id);
         if (!$tenantReminderStatus) 
@@ -25,7 +25,7 @@ class TenantReminderStatusController extends Controller
         $tenantReminderStatus = TenantReminderStatus::create($request->all());
         return response()->json($tenantReminderStatus, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $tenantReminderStatus = TenantReminderStatus::find($id);
         if (!$tenantReminderStatus) 
@@ -33,7 +33,7 @@ class TenantReminderStatusController extends Controller
         $tenantReminderStatus->update($request->all());
         return response()->json($tenantReminderStatus);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $tenantReminderStatus = TenantReminderStatus::find($id);
         if (!$tenantReminderStatus) 

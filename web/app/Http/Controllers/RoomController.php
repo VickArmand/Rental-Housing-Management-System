@@ -13,7 +13,7 @@ class RoomController extends Controller
         $rooms = Room::all();
         return response()->json($rooms);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $room = Room::find($id);
         if (!$room) 
@@ -25,7 +25,7 @@ class RoomController extends Controller
         $room = Room::create($request->all());
         return response()->json($room, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $room = Room::find($id);
         if (!$room) 
@@ -33,7 +33,7 @@ class RoomController extends Controller
         $room->update($request->all());
         return response()->json($room);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $room = Room::find($id);
         if (!$room) 

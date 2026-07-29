@@ -12,7 +12,7 @@ class CaretakerController extends Controller
         $caretakers = Caretaker::all();
         return response()->json($caretakers);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $caretaker = Caretaker::find($id);
         if (!$caretaker) 
@@ -24,7 +24,7 @@ class CaretakerController extends Controller
         $caretaker = Caretaker::create($request->all());
         return response()->json($caretaker, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $caretaker = Caretaker::find($id);
         if (!$caretaker) 
@@ -32,7 +32,7 @@ class CaretakerController extends Controller
         $caretaker->update($request->all());
         return response()->json($caretaker);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $caretaker = Caretaker::find($id);
         if (!$caretaker) 

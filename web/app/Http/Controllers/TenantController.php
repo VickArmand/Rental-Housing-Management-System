@@ -13,7 +13,7 @@ class TenantController extends Controller
         $tenants = Tenant::all();
         return response()->json($tenants);
     }
-    public function show($id)
+    public function show(string $id)
     {
         $tenant = Tenant::find($id);
         if (!$tenant) 
@@ -25,7 +25,7 @@ class TenantController extends Controller
         $tenant = Tenant::create($request->all());
         return response()->json($tenant, 201);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $tenant = Tenant::find($id);
         if (!$tenant) 
@@ -33,7 +33,7 @@ class TenantController extends Controller
         $tenant->update($request->all());
         return response()->json($tenant);
     }
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $tenant = Tenant::find($id);
         if (!$tenant) 
