@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Error;
 use App\Models\RentalCaretaker;
 use Illuminate\Http\Request;
+use ReflectionClass;
+use Illuminate\Support\Facades\Auth;
 
 class RentalCaretakerController extends Controller
 {
@@ -12,9 +15,13 @@ class RentalCaretakerController extends Controller
      */
     public function index()
     {
-        //
-        $rentalCaretakers = RentalCaretaker::all();
-        return response()->json($rentalCaretakers);
+        try {
+            $rentalCaretakers = RentalCaretaker::all();
+            return response()->json($rentalCaretakers);
+        } catch (\Exception $e) {
+            Error::saveError('RentalCaretakerController@index', [], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while fetching rental caretakers'], 500);
+        }
     }
 
     /**
@@ -30,9 +37,13 @@ class RentalCaretakerController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $rentalCaretaker = RentalCaretaker::create($request->all());
-        return response()->json($rentalCaretaker, 201);
+        try {
+            $rentalCaretaker = RentalCaretaker::create($request->all());
+            return response()->json($rentalCaretaker, 201);
+        } catch (\Exception $e) {
+            Error::saveError('RentalCaretakerController@store', $request->all(), (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while fetching rental caretaker'], 500);
+        }
     }
 
     /**
@@ -41,7 +52,12 @@ class RentalCaretakerController extends Controller
     public function show(RentalCaretaker $rentalCaretaker)
     {
         // Load the associated rental and caretaker relationships
-        return response()->json($rentalCaretaker);
+        try {
+            return response()->json($rentalCaretaker);
+        } catch (\Exception $e) {
+            Error::saveError('RentalCaretakerController@show', ['id' => $rentalCaretaker->id], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while fetching rental caretaker'], 500);
+        }
     }
 
     /**
@@ -58,10 +74,18 @@ class RentalCaretakerController extends Controller
     public function update(Request $request, RentalCaretaker $rentalCaretaker)
     {
         //
-        $rentalCaretaker = RentalCaretaker::find($rentalCaretaker->id);
-        if (!$rentalCaretaker) 
-            return response()->json(['message' => 'Rental Caretaker not found'], 404);
-        return response()->json($rentalCaretaker);
+        try {
+            $rentalCaretaker = RentalCaretaker::find($rentalCaretaker->id);
+            if (!$rentalCaretaker) 
+                return response()->json(['message' => 'Rental Caretaker not found'], 404);
+            $rentalCaretaker->update($request->all());
+            $rentalCaretaker->updated_by = Auth::user()->id;
+            $rentalCaretaker->save();
+            return response()->json($rentalCaretaker);
+        } catch (\Exception $e) {
+            Error::saveError('RentalCaretakerController@update', ['id' => $rentalCaretaker->id, 'data' => $request->all()], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while updating rental caretaker'], 500);
+        }
     }
 
     /**
@@ -70,10 +94,16 @@ class RentalCaretakerController extends Controller
     public function destroy(RentalCaretaker $rentalCaretaker)
     {
         //
-        $rentalCaretaker = RentalCaretaker::find($rentalCaretaker->id);
-        if (!$rentalCaretaker) 
-            return response()->json(['message' => 'Rental Caretaker not found'], 404);
-        $rentalCaretaker->delete();
-        return response()->json(['message' => 'Rental Caretaker deleted successfully']);
+        try {
+            $rentalCaretaker = RentalCaretaker::find($rentalCaretaker->id);
+            if (!$rentalCaretaker) 
+                return response()->json(['message' => 'Rental Caretaker not found'], 404);
+            $rentalCaretaker->delete();
+            return response()->json(['message' => 'Rental Caretaker deleted successfully']);
+        } catch (\Exception $e) {
+            Error::saveError('RentalCaretakerController@destroy', ['id' => $rentalCaretaker->id], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while deleting rental caretaker'], 500);
+        }
+        
     }
 }

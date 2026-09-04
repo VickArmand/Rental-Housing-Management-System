@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\RentalOwner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Error;
+use ReflectionClass;
 
 class RentalOwnerController extends Controller
 {
@@ -13,8 +16,13 @@ class RentalOwnerController extends Controller
     public function index()
     {
         //
-        $rentalOwners = RentalOwner::all();
-        return response()->json($rentalOwners);
+        try {
+            $rentalOwners = RentalOwner::all();
+            return response()->json($rentalOwners);
+        } catch (\Exception $e) {
+            Error::saveError('RentalOwnerController@index', [], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while fetching rental owners'], 500);
+        }
     }
 
     /**
@@ -31,8 +39,13 @@ class RentalOwnerController extends Controller
     public function store(Request $request)
     {
         //
-        $rentalOwner = RentalOwner::create($request->all());
-        return response()->json($rentalOwner, 201);
+        try {
+            $rentalOwner = RentalOwner::create($request->all());
+            return response()->json($rentalOwner, 201);
+        } catch (\Exception $e) {
+            Error::saveError('RentalOwnerController@store', $request->all(), (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while saving rental owner'], 500);
+        }
     }
 
     /**
@@ -41,7 +54,12 @@ class RentalOwnerController extends Controller
     public function show(RentalOwner $rentalOwner)
     {
         //
-        return response()->json($rentalOwner);
+        try {
+            return response()->json($rentalOwner);
+        } catch (\Exception $e) {
+            Error::saveError('RentalOwnerController@show', ['id' => $rentalOwner->id], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while fetching rental owner'], 500);
+        }
     }
 
     /**
@@ -58,8 +76,13 @@ class RentalOwnerController extends Controller
     public function update(Request $request, RentalOwner $rentalOwner)
     {
         //
-        $rentalOwner->update($request->all());
-        return response()->json($rentalOwner);
+        try {
+            $rentalOwner->update($request->all());
+            return response()->json($rentalOwner);
+        } catch (\Exception $e) {
+            Error::saveError('RentalOwnerController@update', ['id' => $rentalOwner->id, 'data' => $request->all()], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while updating rental owner'], 500);
+        }
     }
 
     /**
@@ -68,10 +91,15 @@ class RentalOwnerController extends Controller
     public function destroy(RentalOwner $rentalOwner)
     {
         //
-        $rentalOwner = RentalOwner::find($rentalOwner->id);
-        if (!$rentalOwner) 
-            return response()->json(['message' => 'Rental Owner not found'], 404);
-        $rentalOwner->delete();
-        return response()->json(['message' => 'Rental Owner deleted successfully']);
+        try {
+            $rentalOwner = RentalOwner::find($rentalOwner->id);
+            if (!$rentalOwner) 
+                return response()->json(['message' => 'Rental Owner not found'], 404);
+            $rentalOwner->delete();
+            return response()->json(['message' => 'Rental Owner deleted successfully']);
+        } catch (\Exception $e) {
+            Error::saveError('RentalOwnerController@destroy', ['id' => $rentalOwner->id], (new ReflectionClass($e))->getShortName(), $e->getMessage());
+            return response()->json(['message' => 'Error occurred while deleting rental owner'], 500);
+        }
     }
 }
