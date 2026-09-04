@@ -15,6 +15,7 @@ use App\Http\Controllers\TenantReminderController;
 use App\Http\Controllers\TenantReminderStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSubscriptionController;
+use App\Http\Controllers\ErrorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,4 +48,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('tenantreminderstatuses', TenantReminderStatusController::class);
     Route::resource('users', UserController::class);
     Route::resource('usersubscriptions', UserSubscriptionController::class);
+    Route::resource('errors', ErrorController::class);
 });
